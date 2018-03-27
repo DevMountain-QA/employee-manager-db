@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const massive = require('massive');
-require('dotenv').config()
+// require('dotenv').config()
 
 const ec = require('./controllers/employeeController');
 
