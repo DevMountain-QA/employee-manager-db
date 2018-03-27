@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const massive = require('massive');
-// require('dotenv').config()
+require('dotenv').config()
 
 const ec = require('./controllers/employeeController');
 
@@ -19,4 +19,4 @@ app.put('/api/employees/:id', ec.update)
 app.delete('/api/employees/:id', ec.delete)
 
 const port = process.env.PORT || 3000
-app.listen(port, '0.0.0.0', () => { console.log(`Server going nuts on port ${port}`); });
+app.listen(port, () => { console.log(`Server going nuts on port ${port}`); });
