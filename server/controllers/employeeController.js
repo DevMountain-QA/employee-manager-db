@@ -37,16 +37,28 @@ module.exports = {
         const { params, query } = req
         console.log(params)
         console.log(query)
-        dbInstance.updateEmployee([ params.id, query.name, query.phone, query.email, query.title])
+        if (query.id)
+            dbInstance.updateEmployeeAndID([params.id, query.id, query.name, query.phone, query.email, query.title])
             .then(() => {
                 dbInstance.getEmployees()
-                .then(employees => res.status(200).send(employees))
-                .catch(err => {
-                    console.log(err)
-                    res.status(500).send(err)
-                })
+                    .then(employees => res.status(200).send(employees))
+                    .catch(err => {
+                        console.log(err)
+                        res.status(500).send(err)
+                    })
             })
             .catch(() => res.status(500).send())
+        else
+            dbInstance.updateEmployee([params.id, query.name, query.phone, query.email, query.title])
+                .then(() => {
+                    dbInstance.getEmployees()
+                        .then(employees => res.status(200).send(employees))
+                        .catch(err => {
+                            console.log(err)
+                            res.status(500).send(err)
+                        })
+                })
+                .catch(() => res.status(500).send())
         // let index = null;
         // employees.forEach((employee, i) => {
         //   if(employee.id === Number(req.params.id)) index = i;
@@ -64,9 +76,9 @@ module.exports = {
         const dbInstance = req.app.get('db');
         const { params } = req
 
-        dbInstance.deleteEmployee([ params.id ])
-            .then( () => res.status(200).send() )
-            .catch( () => res.status(500).send() )
+        dbInstance.deleteEmployee([params.id])
+            .then(() => res.status(200).send())
+            .catch(() => res.status(500).send())
         // let index = null;
         // employees.forEach((employee, i) => {
         //     if (employee.id === Number(req.params.id)) index = i;
