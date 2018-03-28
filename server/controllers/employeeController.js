@@ -38,7 +38,14 @@ module.exports = {
         console.log(params)
         console.log(query)
         dbInstance.updateEmployee([ params.id, query.name, query.phone, query.email, query.title])
-            .then(() => res.status(200).send())
+            .then(() => {
+                dbInstance.getEmployees()
+                .then(employees => res.status(200).send(employees))
+                .catch(err => {
+                    console.log(err)
+                    res.status(500).send(err)
+                })
+            })
             .catch(() => res.status(500).send())
         // let index = null;
         // employees.forEach((employee, i) => {
